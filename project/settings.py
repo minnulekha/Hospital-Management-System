@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY
 SECRET_KEY = os.environ.get("SECRET_KEY", "fallback-secret-key")
 DEBUG = os.environ.get("DEBUG", "False") == "True"
-ALLOWED_HOSTS = ["stannshospital.onrender.com"]
+ALLOWED_HOSTS = ["https://hospital-management-system-obzb.onrender.com"]
 
 # Applications
 INSTALLED_APPS = [
@@ -75,7 +75,7 @@ USE_TZ = True
 
 # Static files
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'app', 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # ✅ For Render
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 

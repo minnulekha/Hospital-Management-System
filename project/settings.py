@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY
 SECRET_KEY = os.environ.get("SECRET_KEY", "fallback-secret-key")
 DEBUG = os.environ.get("DEBUG", "False") == "True"
-ALLOWED_HOSTS = ["https://hospital-management-system-obzb.onrender.com"]
+ALLOWED_HOSTS = ["hospital-management-system-obzb.onrender.com"]
 
 # Applications
 INSTALLED_APPS = [

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +13,7 @@
          }
     </style>
 </head>
-<body style="background-image: url(../static/images/hsp.jpg); background-size: cover; background-position: center; height: 100vh; margin: 0; display: flex; justify-content: center; align-items: center; font-family: Arial, sans-serif;">
+<body style="background-image: url('{% static "images/hsp.jpg" %}'); background-size: cover; background-position: center; height: 100vh; margin: 0; display: flex; justify-content: center; align-items: center; font-family: Arial, sans-serif;">
 
     <div style="background-color: rgba(255, 255, 255, 0.7); padding: 30px; border-radius: 15px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); overflow-x: auto;">
         <table  cellspacing="0" cellpadding="10" style="border-collapse: collapse; width: 100%; text-align: center;">

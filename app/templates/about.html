@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +8,7 @@
   <style>
 
     body {
-      background-image: url(../static/images/hsp1.jpg);
+      background-image: url("{% static 'images/hsp1.jpg' %}");
       background-size: cover;
     }
     .about-section {
@@ -83,7 +84,7 @@ a{
     <div class="row row-cols-1 row-cols-md-3 g-4">
   <div class="col">
     <div class="card">
-      <img src="../static/images/h1 (1).jpg" class="card-img-top" alt="img">
+      <img src="{% static 'images/h1 (1).jpg' %}" class="card-img-top" alt="img">
       <div class="card-body">
         <h5 class="card-title">Advanced Operation Equipment</h5>
         <p class="card-text"> Our operation theatres are equipped with advanced surgical tools, modern monitoring systems, and strict sterilization protocols to ensure safe and precise procedures.</p>
@@ -92,7 +93,7 @@ a{
   </div>
   <div class="col">
     <div class="card">
-      <img src="../static/images/h1 (2).jpg" class="card-img-top" alt="img">
+      <img src="{% static 'images/h1 (2).jpg' %}" class="card-img-top" alt="img">
       <div class="card-body">
         <h5 class="card-title">Well-Equipped Hospital Rooms</h5>
         <p class="card-text">Our hospital rooms are designed to provide a clean, calm, and healing environment for every patient.
@@ -102,7 +103,7 @@ a{
   </div>
   <div class="col">
     <div class="card">
-      <img src="../static/images/h1 (3).jpg" class="card-img-top" alt="img">
+      <img src="{% static 'images/h1 (3).jpg' %}" class="card-img-top" alt="img">
       <div class="card-body">
         <h5 class="card-title">Tidy and Healing Patient Rooms</h5>
         <p class="card-text">Our hospital rooms offer a tidy, calm, and healing atmosphere to support each patient’s recovery.
@@ -113,7 +114,7 @@ a{
   </div>
   <div class="col">
     <div class="card">
-      <img src="../static/images/h14 (1).png" class="card-img-top" alt="img">
+      <img src="{% static 'images/h14 (1).png' %}" class="card-img-top" alt="img">
       <div class="card-body">
         <h5 class="card-title">Patients’ Health is Our Health</h5>
         <p class="card-text">We believe that every patient’s well-being reflects our commitment to care.
@@ -124,7 +125,7 @@ a{
   </div>
   <div class="col">
     <div class="card">
-      <img src="../static/images/h14 (2).png" class="card-img-top" alt="img">
+      <img src="{% static 'images/h14 (2).png' %}" class="card-img-top" alt="img">
       <div class="card-body">
         <h5 class="card-title">Doctor Consultancy</h5>
         <p class="card-text">We offer doctor consultations to ensure everyone has access to quality 
@@ -135,7 +136,7 @@ a{
   </div>
   <div class="col">
     <div class="card">
-      <img src="../static/images/h14 (3).png" class="card-img-top" alt="img">
+      <img src="{% static 'images/h14 (3).png' %}" class="card-img-top" alt="img">
       <div class="card-body">
         <h5 class="card-title">Caring Hands, Healing Hearts</h5>
         <p class="card-text">Our nursing team is the heart of patient care With a perfect blend of medical expertise.

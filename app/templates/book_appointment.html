@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Appointment</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body style="background-image: url(../static/images/hsp1.jpg); background-size: cover; display: flex; justify-content: center; align-items: center; height: 100vh;">
+
+<form method="POST" style="background: rgba(255,255,255,0.8); padding: 30px; border-radius: 15px;">
+    {% csrf_token %}
+    <h3 class="text-center text-primary mb-4">Book an Appointment</h3>
+
+    <div class="mb-3">
+        <label for="doctor">Select Doctor:</label>
+        <select name="doctor" class="form-control" required>
+            {% for d in doctors %}
+                <option value="{{ d.id }}">{{ d.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="date">Select Date:</label>
+        <input type="date" name="date" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="time">Select Time Slot:</label>
+        <select name="time" class="form-control" required>
+            {% for t in slots %}
+                <option value="{{ t }}">{{ t }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-success w-100">Submit</button>
+</form>
+
+</body>
+</html>

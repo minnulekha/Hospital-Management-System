@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us</title>
+  
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body{
+        background-image: url(../static/images/hsp.jpg);
+        background-size: cover;
+        }
+
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      border-radius: 16px;
+      padding: 30px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    margin-left: 30%;
+    margin-top: 7%;
+
+    h2 {
+      text-align: center;
+      color:#96685c;
+      margin-bottom: 25px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      color: #fff;
+      font-weight: 500;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+      outline: none;
+
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+.contact-info p {
+  color: #f0f0f0;
+}
+    .form-group textarea {
+      resize: vertical;
+      height: 100px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 12px;
+      font-size: 1rem;
+      background-color:#96685c;;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s;
+    }
+
+    .submit-btn:hover {
+      background-color:#8d7d79;
+    }
+
+    
+
+    
+
+ 
+}
+  </style>
+</head>
+<body>
+ 
+  <div class="container">
+    <h2>Get in Touch</h2>
+    {% if success %}
+  <div class="alert alert-success" role="alert">
+    Thank you for your message! We'll get back to you soon.
+  </div>
+{% endif %}
+    <form method="POST">
+      {% csrf_token %} 
+      <div class="form-group">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" name="name" required />
+      </div>
+      <div class="form-group">
+        <label for="email">Your Email</label>
+        <input type="email" id="email" name="email" required />
+      </div>
+      <div class="form-group">
+        <label for="subject">Subject</label>
+        <input type="text" id="subject" name="subject" required />
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" required></textarea>
+      </div>
+      <button type="submit" class="submit-btn">Send Message</button>
+    </form>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> 
+</body>
+</html>

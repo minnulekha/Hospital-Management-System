@@ -2,79 +2,170 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>St.Ann'S Hospital</title>
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-image:url('{% static "images/hsp1.jpg" %}');
-            background-size: cover;
-            background-position: center;
-            height: 100vh;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: Arial, sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>View Patients - St.Ann's Hospital</title>
 
-        table {
-            background-color: rgba(255, 255, 255, 0.7); 
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-            border-collapse: collapse;
-            min-width: 800px;
-        }
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-        th, td {
-            border: 1px solid #ccc;
-            padding: 12px 16px;
-            text-align: center;
-        }
+<style>
+body {
+    background-image: url('{% static "images/hsp1.jpg" %}');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-        th {
-            background-color: rgba(0, 123, 255, 0.2); 
-            color: #96685c;
-        }
-td{
+/* Navbar */
+.navbar {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(6px);
+    padding: 10px 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.navbar-brand { 
+    color: #8E5E3B !important; 
+    font-weight: 700; 
+    font-family: Georgia, serif; 
+    font-size: 1.5rem; 
+}
+.navbar .btn-nav {
+    background-color: #fff;
+    color: #8E5E3B;
+    border-radius: 25px;
+    padding: 6px 18px;
+    font-weight: 600;
+    transition: 0.3s;
+    margin-left: 8px;
+    text-decoration: none;
+}
+.navbar .btn-nav:hover {
+    background-color: #f2d6cf;
+    color: #5a3a33;
+}
+.btn-logout {
+    background-color: #8E5E3B; 
+    color: #fff; 
+    border-radius: 25px; 
+    padding: 6px 18px; 
+    font-weight: 600;
+    transition: 0.3s;
+}
+.btn-logout:hover {
+    background-color: #ab867d; 
+    color: #fff; 
+}
+
+/* Table container */
+.table-container {
+    width: 95%;
+    max-width: 1000px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    margin: 120px auto 50px auto;
+}
+
+h3 {
+    font-weight: 700;
     color: #96685c;
 }
-        a {
-            text-decoration: none;
-            color: #96685c;
-        }
 
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+/* Table styles */
+table { width: 100%; border-collapse: collapse; }
+th, td { border: 1px solid #96685c; padding: 12px 16px; text-align: center; color: #5a3a33; }
+th { background-color: rgba(150, 104, 92, 0.15); font-weight: 700; }
+tr:hover { background-color: rgba(150, 104, 92, 0.1); }
+
+a.action-btn {
+    color: white;
+    background-color: #96685c;
+    padding: 6px 14px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+}
+a.action-btn:hover { background-color: #c1998f; }
+
+.approved {
+    background-color: #5cb85c;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    th, td { padding: 10px 12px; font-size: 0.95rem; }
+}
+@media (max-width: 480px) {
+    .table-container { padding: 15px; }
+    th, td { padding: 8px 10px; font-size: 0.85rem; }
+    a.action-btn, .approved { padding: 5px 10px; font-size: 0.85rem; }
+    .navbar .btn-nav, .btn-logout { padding: 5px 12px; font-size: 0.85rem; }
+}
+</style>
 </head>
 <body>
-    <table>
-        <tr>
-            <th>Name</th>
-           
-           
-            <th>Age</th>
-            <th>Gender</th>
-            <th>Delete</th>
-            <th>Approve</th>
-            
-        </tr>
-        {% for i in views %} 
-        <tr>
-            <td>{{i.name}}</td>
-            <td>{{i.age}}</td>
-            <td>{{i.gender}}</td>
-        
-           
-            <td><a href="del_patient/{{i.id}}">Delete</a></td>
-            <td><a href="approvepati/{{i.id}}">Approve</a></td>
-        </tr>
-     {% endfor %} 
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'adminpage' %}">St.Ann's Hospital</a>
+    <div class="d-flex gap-2">
+      <a href="{% url 'adminpage' %}" class="btn btn-nav">Home</a>
+      <a href="{% url 'view_patient_by_admin' %}" class="btn btn-nav">Patients</a>
+      <a href="{% url 'view_doctors' %}" class="btn btn-nav">Doctors</a>
+      <a href="{% url 'view_contacts' %}" class="btn btn-nav">Contacts</a>
+      <a href="{% url 'logout' %}" class="btn btn-logout">Logout</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Table -->
+<div class="table-container">
+    <h3 class="mb-4 text-center">Patients List</h3>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Delete</th>
+                <th>Approve</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for i in views %}
+            <tr>
+                <td>{{ i.name }}</td>
+                <td>{{ i.age }}</td>
+                <td>{{ i.gender }}</td>
+                <td>
+                    <a href="{% url 'delete_patient_by_admin' i.id %}" class="action-btn">Delete</a>
+                </td>
+                <td>
+                    {% if i.is_approved %}
+                        <span class="approved">Approved</span>
+                    {% else %}
+                        <a href="{% url 'approve_patient_by_admin' i.id %}" class="action-btn">Approve</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="5">No patients found.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
     </table>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

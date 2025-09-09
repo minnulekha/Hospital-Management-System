@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home_view, about, experts, contact, patient_register, login_all, adminpage, doctor_register, patient_home_page, Doctor_home_page,view_patient_by_admin,delete_patient_by_admin,approve_patient_by_admin,view_patient_by_doctor,view_all_doctors,edit_doctor,update_doctor,edit_patient_profile,view_all_doctors,logout_user,view_contacts,book_appointment,view_appointments_doctor,approve_appointment,view_appointments_patient
+from .views import home_view, about, experts, contact, patient_register, login_all, adminpage, doctor_register, patient_home_page, Doctor_home_page,view_patient_by_admin,delete_patient_by_admin,approve_patient_by_admin,view_patient_by_doctor,view_all_doctors,edit_doctor,update_doctor,edit_patient_profile,view_all_doctors,logout_user,view_contacts,book_appointment,view_appointments_doctor,approve_appointment,view_appointments_patient,view_doctors_by_patients
 
 urlpatterns = [
     path('', home_view, name='home'),
@@ -20,7 +20,7 @@ urlpatterns = [
     path('dhome/edit_doctor', edit_doctor, name='edit_doctor'),
     path('update_doc/<int:id>/', update_doctor, name='update_doctor'),
     path('phome/edit_patient/<int:id>/', edit_patient_profile, name='edit_patient'),
-    path('phome/view_doctors_patient/', view_all_doctors, name='view_doctors_patient'),
+    path('phome/view_doctors_patient/', view_doctors_by_patients, name='view_doctors_patient'),
     path('phome/logout/', logout_user, name='logout'),
     path('dhome/logout/', logout_user, name='logout'),
     path('view_contacts/', view_contacts, name='view_contacts'),

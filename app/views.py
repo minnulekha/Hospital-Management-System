@@ -143,10 +143,15 @@ def delete_patient_by_admin(request, id):
 @login_required
 def approve_patient_by_admin(request, id):
     patient = get_object_or_404(Patient, id=id)
+    patient.is_approved = True         # ✅ set approved status
+    patient.save()
+
     user = patient.Patient_id
-    user.is_active = True
+    user.is_active = True              # ✅ allow login
     user.save()
+
     return redirect('view_patient_by_admin')
+
 
 @login_required
 def view_contacts(request):
@@ -216,7 +221,7 @@ def edit_patient_profile(request, id):
 
     return render(request, "edit_patient.html", {"user": user, "patient": patient})
 
-def view_all_doctors(request):
+def view_doctors_by_patients(request):
     doctors = Doctor.objects.all()
     return render(request, "view_doctors_patient.html", {'view': doctors})
 

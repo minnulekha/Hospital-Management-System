@@ -11,105 +11,129 @@
             background-image: url('{% static "images/hsp1.jpg" %}');
             background-size: cover;
         }
-h1{
-    text-align: center;
-    color:antiquewhite;
-    text-align: center;
-    font-size: 50px;
-    margin: 5px;
-    font-size: 30px;
-    padding: 40px;
-    font-family:Georgia, 'Times New Roman', Times, serif;
 
-}
-.card-group{
-    padding: 10px;
-    margin: 100px;
-}
-.paragraph{
-    text-align: center;
-    color: antiquewhite;
-    margin: 50px;
+        h1{
+            text-align: center;
+            color: antiquewhite;
+            font-size: 30px;
+            padding: 40px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
 
-}
-span{
-    font-size: 20px;
-    color:#8f5e51;
-    font-size: 30px;
-}
+        .card-group{
+            padding: 10px;
+            margin: 100px;
+        }
 
+        .paragraph{
+            text-align: center;
+            color: antiquewhite;
+            margin: 50px;
+        }
 
+        span{
+            font-size: 30px;
+            color: #8f5e51;
+        }
+
+        /* Back to Home button (top-right) */
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            padding: 8px 20px;
+            border-radius: 30px;
+            border: 2px solid #b08b82;
+            background: transparent;
+            color: #b08b82;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: #b08b82;
+            color: #fff;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
-    <h1> Meet Our Expert Doctors</h1>
-    <p class="paragraph">At <span> <b> St. Ann’s Hospital, </b></span> our doctors form the foundation of quality care. Each one is carefully chosen for their knowledge,
-         skill, and dedication to patient well-being. They work closely with other medical staff to ensure accurate diagnoses 
-         and effective treatment. With a patient-first approach, they listen with empathy and treat with precision. 
-         From the first consultation to the final stage of recovery, our doctors are committed to guiding every patient 
-         with care and confidence. Their goal is not just to treat illness, but to restore health and hope.</p>
-    
 
+    <!-- Back to Home at top-right -->
+    <a href="{% url 'home' %}" class="back-btn">Back to Home</a>
+
+    <h1>Meet Our Expert Doctors</h1>
+    <p class="paragraph">
+        At <span><b>St. Ann’s Hospital</b></span>, our doctors form the foundation of quality care. 
+        Each one is carefully chosen for their knowledge, skill, and dedication to patient well-being. 
+        They work closely with other medical staff to ensure accurate diagnoses and effective treatment. 
+        With a patient-first approach, they listen with empathy and treat with precision. 
+        From the first consultation to the final stage of recovery, our doctors are committed to guiding 
+        every patient with care and confidence. Their goal is not just to treat illness, but to restore health and hope.
+    </p>
 
     <div class="card-group">
-  <div class="card">
-    <img src="../static/doctors/1.png" class="card-img-top" alt="img">
-    <div class="card-body">
-      <h5 class="card-title">Dr. Farhan Qureshi</h5>
-      <p class="card-text">Gastroenterologist </p>
-      <p class="card-text"><small class="text-body-secondary">Manages digestive system disorders for a healthier gut and overall well-being.</small></p>
+        <div class="card">
+            <img src="../static/doctors/1.png" class="card-img-top" alt="img">
+            <div class="card-body">
+                <h5 class="card-title">Dr. Farhan Qureshi</h5>
+                <p class="card-text">Gastroenterologist</p>
+                <p class="card-text"><small class="text-body-secondary">Manages digestive system disorders for a healthier gut and overall well-being.</small></p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="../static/doctors/15.png" class="card-img-top" alt="img">
+            <div class="card-body">
+                <h5 class="card-title">Dr. Ravi Menon</h5>
+                <p class="card-text">Dermatologist</p>
+                <p class="card-text"><small class="text-body-secondary">Cares for skin, hair, and nail conditions with both medical and cosmetic treatments.</small></p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="../static/doctors/12.png" class="card-img-top" alt="img">
+            <div class="card-body">
+                <h5 class="card-title">Dr. Rakesh Sharma</h5>
+                <p class="card-text">Orthopedic</p>
+                <p class="card-text"><small class="text-body-secondary">Treats bone, joint, and muscle issues to restore movement and relieve pain.</small></p>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="card">
-    <img src="../static/doctors/15.png" class="card-img-top" alt="img">
-    <div class="card-body">
-      <h5 class="card-title">Dr. Ravi Menon</h5>
-      <p class="card-text">Dermatologist</p>
-      <p class="card-text"><small class="text-body-secondary">Cares for skin, hair, and nail conditions with both medical and cosmetic treatments.</small></p>
+
+    <div class="card-group">
+        <div class="card">
+            <img src="../static/doctors/4.png" class="card-img-top" alt="img">
+            <div class="card-body">
+                <h5 class="card-title">Dr. Leena George</h5>
+                <p class="card-text">Oncology</p>
+                <p class="card-text"><small class="text-body-secondary">Specializes in the diagnosis and treatment of cancer with compassionate, advanced care.</small></p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="../static/doctors/11.png" class="card-img-top" alt="img">
+            <div class="card-body">
+                <h5 class="card-title">Dr. Sanjay Patil</h5>
+                <p class="card-text">Psychiatrist</p>
+                <p class="card-text"><small class="text-body-secondary">Focused on mental health, offering therapy and medical treatment for emotional and psychological disorders.</small></p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="../static/doctors/9.png" class="card-img-top" alt="img">
+            <div class="card-body">
+                <h5 class="card-title">Dr. Kavitha Raghavan</h5>
+                <p class="card-text">Ophtalmologist</p>
+                <p class="card-text"><small class="text-body-secondary">Experts in eye care, treating vision problems and eye diseases.</small></p>
+            </div>
+        </div>
+        
     </div>
-  </div>
-  <div class="card">
-    <img src="../static/doctors/12.png" class="card-img-top" alt="img">
-    <div class="card-body">
-      <h5 class="card-title">Dr. Rakesh Sharma</h5>
-      <p class="card-text">Orthopedic </p>
-      <p class="card-text"><small class="text-body-secondary">Treats bone, joint, and muscle issues to restore movement and relieve pain.</small></p>
-    </div>
-  </div>
+     <div class="text-center mb-4">
+  <a href="{% url 'home' %}" class="btn btn-lg" 
+     style="background-color:#b08b82; color:white; border-radius:25px;">
+   Back to Home
+  </a>
 </div>
 
-
-
-<div class="card-group">
-  <div class="card">
-    <img src="../static/doctors/4.png" class="card-img-top" alt="img">
-    <div class="card-body">
-      <h5 class="card-title">Dr. Leena George</h5>
-      <p class="card-text">Oncology </p>
-      <p class="card-text"><small class="text-body-secondary">Specializes in the diagnosis and treatment of cancer with compassionate, advanced care.</small></p>
-    </div>
-  </div>
-  <div class="card">
-    <img src="../static/doctors/11.png" class="card-img-top" alt="img">
-    <div class="card-body">
-      <h5 class="card-title">Dr. Sanjay Patil</h5>
-      <p class="card-text">Psychiatrist</p>
-      <p class="card-text"><small class="text-body-secondary">Focused on mental health, offering therapy and medical treatment for emotional and psychological disorders.</small></p>
-    </div>
-  </div>
-  <div class="card">
-    <img src="../static/doctors/9.png" class="card-img-top" alt="img">
-    <div class="card-body">
-      <h5 class="card-title">Dr. Kavitha Raghavan</h5>
-      <p class="card-text">Ophtalmologist</p>
-      <p class="card-text"><small class="text-body-secondary"> Experts in eye care, treating vision problems and eye diseases.</small></p>
-    </div>
-  </div>
-</div>
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

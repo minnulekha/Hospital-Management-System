@@ -18,9 +18,11 @@ class Patient(models.Model):
     age = models.IntegerField()
     gender = models.CharField(max_length=10)
     admitted_on = models.DateField(auto_now_add=True)
+    is_approved = models.BooleanField(default=False)  # NEW FIELD
 
-    def _str_(self):
+    def __str__(self):
         return self.name
+
     
 class Appointment(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True, blank=True)

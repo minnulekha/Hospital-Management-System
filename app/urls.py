@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home_view, about, experts, contact, patient_register, login_all, adminpage, doctor_register, patient_home_page, Doctor_home_page,view_patient_by_admin,delete_patient_by_admin,approve_patient_by_admin,view_patient_by_doctor,view_all_doctors,edit_doctor,update_doctor,edit_patient_profile,view_all_doctors,logout_user,view_contacts,book_appointment,view_appointments_doctor,approve_appointment,view_appointments_patient,view_doctors_by_patients
+from .views import home_view, about, experts, contact, patient_register, login_all, adminpage, doctor_register, patient_home_page, Doctor_home_page,view_patient_by_admin,delete_patient_by_admin,view_patient_by_doctor,view_all_doctors,edit_doctor,update_doctor,edit_patient_profile,view_all_doctors,logout_user,view_contacts,book_appointment,view_appointments_doctor,approve_appointment,view_appointments_patient,view_doctors_by_patients,approve_doctor_by_admin, delete_doctor_by_admin
 
 urlpatterns = [
     path('', home_view, name='home'),
@@ -14,7 +14,8 @@ urlpatterns = [
     path('dhome/', Doctor_home_page, name='dhome'),
     path('admin1/view_patient_by_admin/', view_patient_by_admin, name='view_patient_by_admin'),
     path('admin1/view_patient_by_admin/del_patient/<int:id>/', delete_patient_by_admin, name='delete_patient_by_admin'),
-    path('admin1/view_patient_by_admin/approvepati/<int:id>/', approve_patient_by_admin, name='approve_patient_by_admin'),
+    path('dhome/delete_doctor/<int:id>/', delete_doctor_by_admin, name='delete_doctor_by_admin'),
+    path('admin1/view_doctors/approvedoc/<int:id>/', approve_doctor_by_admin, name='approve_doctor_by_admin'),
     path('dhome/view_pat_by_dr', view_patient_by_doctor),
     path('dhome/view_doctors/', view_all_doctors, name='view_doctors'),
     path('dhome/edit_doctor', edit_doctor, name='edit_doctor'),

@@ -33,7 +33,7 @@ body {
 }
 .navbar .btn-nav {
     background-color: #fff;
-    color: #8E5E3B;
+    color: #8E5E3B !important;
     border-radius: 25px;
     padding: 6px 18px;
     font-weight: 600;
@@ -43,11 +43,11 @@ body {
 }
 .navbar .btn-nav:hover {
     background-color: #f2d6cf;
-    color: #5a3a33;
+    color: #5a3a33 !important;
 }
 .btn-logout {
     background-color: #8E5E3B; 
-    color: #fff; 
+    color: #fff !important; 
     border-radius: 25px; 
     padding: 6px 18px; 
     font-weight: 600;
@@ -55,7 +55,37 @@ body {
 }
 .btn-logout:hover {
     background-color: #ab867d; 
-    color: #fff; 
+    color: #fff !important; 
+}
+.navbar-toggler {
+  border: none;
+}
+.navbar-toggler-icon {
+  filter: invert(40%);
+}
+
+/* Spacing for collapsed navbar */
+@media (max-width: 991px) {
+  .navbar-nav {
+    gap: 10px;
+  }
+  .navbar-nav .nav-link {
+    display: block;
+    padding: 10px 15px;
+    text-align: center;
+    border-radius: 15px;
+    background-color: #fff;
+    color: #8E5E3B !important;
+  }
+  .navbar-nav .nav-link:hover {
+    background-color: #f2d6cf;
+  }
+  .navbar-nav .btn-logout {
+    background-color: #8E5E3B !important;
+    color: #fff !important;
+    width: 100%;
+    text-align: center;
+  }
 }
 
 /* Table container */
@@ -98,12 +128,22 @@ tr:hover { background-color: rgba(150, 104, 92, 0.1); }
 <nav class="navbar navbar-expand-lg fixed-top">
   <div class="container-fluid">
     <a class="navbar-brand" href="{% url 'adminpage' %}">St.Ann's Hospital</a>
-    <div class="d-flex gap-2">
-      <a href="{% url 'adminpage' %}" class="btn btn-nav">Home</a>
-      <a href="{% url 'view_patient_by_admin' %}" class="btn btn-nav">Patients</a>
-      <a href="{% url 'view_doctors' %}" class="btn btn-nav">Doctors</a>
-      <a href="{% url 'view_contacts' %}" class="btn btn-nav">Contacts</a>
-      <a href="{% url 'logout' %}" class="btn btn-logout">Logout</a>
+
+    <!-- Toggler -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible menu -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a href="{% url 'adminpage' %}" class="nav-link btn-nav">Home</a></li>
+        <li class="nav-item"><a href="{% url 'view_patient_by_admin' %}" class="nav-link btn-nav">Patients</a></li>
+        <li class="nav-item"><a href="{% url 'view_doctors' %}" class="nav-link btn-nav">Doctors</a></li>
+        <li class="nav-item"><a href="{% url 'view_contacts' %}" class="nav-link btn-nav">Contacts</a></li>
+        <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link btn-logout">Logout</a></li>
+      </ul>
     </div>
   </div>
 </nav>

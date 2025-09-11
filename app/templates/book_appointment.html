@@ -86,7 +86,7 @@ label {
     color: #5a3a33;
 }
 
-input, select, button {
+input, select, textarea, button {
     margin-bottom: 15px;
 }
 
@@ -122,7 +122,7 @@ button:hover {
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg fixed-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="{% url 'home' %}">St.Ann's Hospital</a>
+    <a class="navbar-brand" href="{% url 'phome' %}">St.Ann's Hospital</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -141,11 +141,26 @@ button:hover {
     {% csrf_token %}
     <h3>Book an Appointment</h3>
 
+    <!-- Department Filter -->
+    <div class="mb-3">
+        <label for="department">Select Department:</label>
+        <select id="department" name="department" class="form-control" 
+                onchange="window.location='?department='+this.value" required>
+            <option value="">-- All Departments --</option>
+            {% for value,label in departments %}
+                <option value="{{ value }}" {% if selected_dept == value %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- Doctor Dropdown -->
     <div class="mb-3">
         <label for="doctor">Select Doctor:</label>
         <select id="doctor" name="doctor" class="form-control" required>
             {% for d in doctors %}
-                <option value="{{ d.id }}">{{ d.name }}</option>
+                <option value="{{ d.id }}">{{ d.name }} ({{ d.department }})</option>
+            {% empty %}
+                <option disabled>No doctors available in this department</option>
             {% endfor %}
         </select>
     </div>
@@ -162,6 +177,12 @@ button:hover {
                 <option value="{{ t }}">{{ t }}</option>
             {% endfor %}
         </select>
+    </div>
+
+    <!-- NEW Symptoms Field -->
+    <div class="mb-3">
+        <label for="symptoms">Describe your problem / symptoms:</label>
+        <textarea id="symptoms" name="symptoms" class="form-control" rows="3" placeholder="e.g. Fever and cough for 3 days"></textarea>
     </div>
 
     <button type="submit" class="btn btn-success w-100">Submit</button>

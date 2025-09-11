@@ -62,7 +62,7 @@
     /* Table container */
     .table-container {
         width: 100%;
-        max-width: 1000px;
+        max-width: 1100px;
         overflow-x: auto;
         background-color: rgba(255, 255, 255, 0.8);
         padding: 20px;
@@ -74,7 +74,7 @@
     table {
         width: 100%;
         border-collapse: collapse;
-        min-width: 600px;
+        min-width: 700px;
     }
 
     th, td {
@@ -83,6 +83,7 @@
         text-align: center;
         color: #5a3a33;
         font-size: 1rem;
+        vertical-align: middle;
     }
 
     th {
@@ -145,6 +146,7 @@
                 <th>Patient</th>
                 <th>Date</th>
                 <th>Time</th>
+                <th>Symptoms</th>
                 <th>Status</th>
                 <th>Action</th>
             </tr>
@@ -155,6 +157,7 @@
                 <td>{{ app.patient.name }}</td>
                 <td>{{ app.date }}</td>
                 <td>{{ app.time }}</td>
+                <td>{{ app.symptoms|default:"—" }}</td>
                 <td>
                     {% if app.status == "Appointed" %}
                         Appointed
@@ -171,7 +174,7 @@
                 </td>
             </tr>
         {% empty %}
-            <tr><td colspan="5">No appointments yet.</td></tr>
+            <tr><td colspan="6">No appointments yet.</td></tr>
         {% endfor %}
         </tbody>
     </table>

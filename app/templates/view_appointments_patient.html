@@ -62,7 +62,7 @@ body {
     border-radius: 15px;
     padding: 25px 30px;
     box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-    max-width: 900px;
+    max-width: 1000px;
     margin: auto;
 }
 
@@ -78,6 +78,7 @@ h2 {
 .table th, .table td {
     text-align: center;
     color: #5a3a33;
+    vertical-align: middle;
 }
 .table th {
     background-color: rgba(150, 104, 92, 0.2);
@@ -123,7 +124,7 @@ h2 {
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg fixed-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="{% url 'home' %}">St.Ann's Hospital</a>
+    <a class="navbar-brand" href="{% url 'phome' %}">St.Ann's Hospital</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -144,8 +145,10 @@ h2 {
         <thead>
           <tr>
             <th>Doctor</th>
+            <th>Department</th>
             <th>Date</th>
             <th>Time</th>
+            <th>Symptoms</th>
             <th>Status</th>
           </tr>
         </thead>
@@ -153,19 +156,27 @@ h2 {
           {% for app in appointments %}
           <tr>
             <td>{{ app.doctor.name }}</td>
-            <td>{{ app.date }}</td>
-            <td>{{ app.time }}</td>
+            <td>{{ app.doctor.department }}</td>
+            <td>{{ app.date|date:"M d, Y" }}</td>
+            <td>{{ app.time|time:"h:i A" }}</td>
+            <td>
+              {% if app.symptoms %}
+                {{ app.symptoms }}
+              {% else %}
+                -
+              {% endif %}
+            </td>
             <td>
               {% if app.status == "Appointed" %}
-                Appointed
+                <span class="badge bg-success">Appointed</span>
               {% else %}
-                Pending
+                <span class="badge bg-warning text-dark">Pending</span>
               {% endif %}
             </td>
           </tr>
           {% empty %}
           <tr>
-            <td colspan="4">No appointments found.</td>
+            <td colspan="6">No appointments found.</td>
           </tr>
           {% endfor %}
         </tbody>

@@ -45,6 +45,36 @@ body {
     background-color: #f2d6cf;
     color: #5a3a33;
 }
+.navbar-toggler {
+  border: none;
+}
+.navbar-toggler-icon {
+  filter: invert(40%); /* makes the ☰ dark */
+}
+/* Spacing for collapsed navbar */
+@media (max-width: 991px) {
+  .navbar-nav {
+    gap: 10px; /* space between menu items */
+  }
+  .navbar-nav .nav-link {
+    display: block;
+    padding: 10px 15px;
+    text-align: center;
+    border-radius: 15px;
+    background-color: #fff;
+    color: #8E5E3B !important;
+  }
+  .navbar-nav .nav-link:hover {
+    background-color: #f2d6cf;
+  }
+  .navbar-nav .btn-logout {
+    background-color: #8E5E3B !important;
+    color: #fff !important;
+    width: 100%;
+    text-align: center;
+  }
+}
+
 .btn-logout {
     background-color: #8E5E3B; 
     color: #fff; 
@@ -72,6 +102,9 @@ body {
 h3 {
     font-weight: 700;
     color: #96685c;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 /* Table styles */
@@ -91,14 +124,6 @@ a.action-btn {
 }
 a.action-btn:hover { background-color: #c1998f; }
 
-.approved {
-    background-color: #5cb85c;
-    color: white;
-    padding: 6px 14px;
-    border-radius: 10px;
-    font-weight: 500;
-}
-
 /* Responsive */
 @media (max-width: 768px) {
     th, td { padding: 10px 12px; font-size: 0.95rem; }
@@ -106,7 +131,7 @@ a.action-btn:hover { background-color: #c1998f; }
 @media (max-width: 480px) {
     .table-container { padding: 15px; }
     th, td { padding: 8px 10px; font-size: 0.85rem; }
-    a.action-btn, .approved { padding: 5px 10px; font-size: 0.85rem; }
+    a.action-btn { padding: 5px 10px; font-size: 0.85rem; }
     .navbar .btn-nav, .btn-logout { padding: 5px 12px; font-size: 0.85rem; }
 }
 </style>
@@ -117,19 +142,33 @@ a.action-btn:hover { background-color: #c1998f; }
 <nav class="navbar navbar-expand-lg fixed-top">
   <div class="container-fluid">
     <a class="navbar-brand" href="{% url 'adminpage' %}">St.Ann's Hospital</a>
-    <div class="d-flex gap-2">
-      <a href="{% url 'adminpage' %}" class="btn btn-nav">Home</a>
-      <a href="{% url 'view_patient_by_admin' %}" class="btn btn-nav">Patients</a>
-      <a href="{% url 'view_doctors' %}" class="btn btn-nav">Doctors</a>
-      <a href="{% url 'view_contacts' %}" class="btn btn-nav">Contacts</a>
-      <a href="{% url 'logout' %}" class="btn btn-logout">Logout</a>
+
+    <!-- Toggler button (☰) -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible menu -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a href="{% url 'adminpage' %}" class="nav-link btn-nav">Home</a></li>
+        <li class="nav-item"><a href="{% url 'view_patient_by_admin' %}" class="nav-link btn-nav">Patients</a></li>
+        <li class="nav-item"><a href="{% url 'view_doctors' %}" class="nav-link btn-nav">Doctors</a></li>
+        <li class="nav-item"><a href="{% url 'view_contacts' %}" class="nav-link btn-nav">Contacts</a></li>
+        <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link btn-logout">Logout</a></li>
+      </ul>
     </div>
   </div>
 </nav>
 
+
 <!-- Table -->
 <div class="table-container">
-    <h3 class="mb-4 text-center">Patients List</h3>
+    <h3 class="mb-4 text-center">
+        Patients List
+        <a href="{% url 'pat_reg' %}" class="action-btn">Add Patient</a>
+    </h3>
     <table class="table table-hover">
         <thead>
             <tr>
@@ -137,7 +176,6 @@ a.action-btn:hover { background-color: #c1998f; }
                 <th>Age</th>
                 <th>Gender</th>
                 <th>Delete</th>
-                <th>Approve</th>
             </tr>
         </thead>
         <tbody>
@@ -149,17 +187,10 @@ a.action-btn:hover { background-color: #c1998f; }
                 <td>
                     <a href="{% url 'delete_patient_by_admin' i.id %}" class="action-btn">Delete</a>
                 </td>
-                <td>
-                    {% if i.is_approved %}
-                        <span class="approved">Approved</span>
-                    {% else %}
-                        <a href="{% url 'approve_patient_by_admin' i.id %}" class="action-btn">Approve</a>
-                    {% endif %}
-                </td>
             </tr>
         {% empty %}
             <tr>
-                <td colspan="5">No patients found.</td>
+                <td colspan="4">No patients found.</td>
             </tr>
         {% endfor %}
         </tbody>

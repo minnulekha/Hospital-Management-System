@@ -5,12 +5,24 @@ class MYUSER(AbstractUser):
     user_type = models.CharField(max_length=10)
 
 class Doctor(models.Model):
+    DEPARTMENT_CHOICES = [
+        ("General", "General"),   
+        ("Cardiology", "Cardiology"),
+        ("Neurology", "Neurology"),
+        ("ENT", "ENT"),
+        ("Orthopedics", "Orthopedics"),
+        ("Pediatrics", "Pediatrics"),
+        ("Dermatology", "Dermatology"),
+    ]
+
     Doctor_id = models.ForeignKey(MYUSER, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=100)
     doc_image = models.ImageField(upload_to='doctors/', blank=True, null=True)
+    department = models.CharField(max_length=50, choices=DEPARTMENT_CHOICES, default="General")  # ✅ default set to General
 
-    def _str_(self):
-        return self.name
+    def __str__(self):
+        return f"{self.name} ({self.department})"
+
 
 class Patient(models.Model):
     Patient_id = models.ForeignKey(MYUSER, on_delete=models.CASCADE, null=True, blank=True)
@@ -30,9 +42,11 @@ class Appointment(models.Model):
     status = models.CharField(max_length=20, default="Pending")
     date = models.DateField()
     time = models.TimeField()
+    symptoms = models.TextField(blank=True, null=True)   # NEW FIELD
 
-    def _str_(self):
-        return str(self.patient)
+    def __str__(self):
+        return f"{self.patient} - {self.doctor} ({self.date} {self.time})"
+
     
 class Contact(models.Model):
     name = models.CharField(max_length=100)

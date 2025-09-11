@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
+from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout
 from django.contrib.auth.decorators import login_required
 from .models import Doctor, Patient, Appointment, MYUSER,Contact
@@ -41,7 +42,7 @@ def patient_register(request):
         gn = request.POST['gender']
         pw = request.POST['password']
 
-        
+        # Create user and make them active immediately
         user = MYUSER.objects.create_user(
             first_name=fn,
             last_name=ln,
@@ -49,11 +50,11 @@ def patient_register(request):
             username=un,
             password=pw,
             user_type="patient",
-            is_active=False  
+            is_active=True  # ✅ no admin approval needed
         )
         user.save()
 
-      
+        # Create patient profile
         Patient.objects.create(
             Patient_id=user,
             name=f"{fn} {ln}",
@@ -75,10 +76,12 @@ def doctor_register(request):
         p = request.POST['password']
         na = request.POST["name"]
         doc = request.FILES.get("doc_image")
+        dept = request.POST["department"]   
 
         if MYUSER.objects.filter(username=u).exists():
             return HttpResponse("Username already exists. Try another one.")
 
+        # Doctor user is inactive by default until approved
         x = MYUSER.objects.create_user(
             first_name=fn,
             last_name=ln,
@@ -86,12 +89,14 @@ def doctor_register(request):
             email=e,
             password=p,
             user_type="doctor",
-            is_active=True,
+            is_active=False,  # ❌ can't log in until approved
             is_staff=True
         )
-        Doctor.objects.create(Doctor_id=x, name=na, doc_image=doc)
-        return redirect('login')
+        Doctor.objects.create(Doctor_id=x, name=na, doc_image=doc, department=dept)
+        return HttpResponse("Registered successfully. Wait for admin approval to log in.")
+
     return render(request, "doctor_reg.html")
+
 
 def login_all(request):
     if request.method == "POST":
@@ -100,7 +105,12 @@ def login_all(request):
         user = authenticate(request, username=us, password=pas)
 
         if user:
+            if not user.is_active:  # User not approved yet
+                messages.warning(request, "Your account is not approved by admin yet.")
+                return redirect('login')
+            
             auth_login(request, user)
+            
             if user.is_superuser:
                 return redirect('adminpage')
             elif user.user_type == 'doctor':
@@ -109,7 +119,10 @@ def login_all(request):
             elif user.user_type == 'patient':
                 request.session['patient_id'] = user.id
                 return redirect('phome')
-        return HttpResponse("Invalid credentials")
+        else:
+            messages.error(request, "Invalid username or password.")
+            return redirect('login')
+    
     return render(request, "login.html")
 
 def adminpage(request):
@@ -141,31 +154,41 @@ def delete_patient_by_admin(request, id):
     return redirect('view_patient_by_admin')
 
 @login_required
-def approve_patient_by_admin(request, id):
-    patient = get_object_or_404(Patient, id=id)
-    patient.is_approved = True         # ✅ set approved status
-    patient.save()
-
-    user = patient.Patient_id
-    user.is_active = True              # ✅ allow login
+def approve_doctor_by_admin(request, id):
+    doctor = get_object_or_404(Doctor, id=id)
+    user = doctor.Doctor_id
+    user.is_active = True   # allow login
     user.save()
+    return redirect('view_doctors')  # or your admin doctors page
 
-    return redirect('view_patient_by_admin')
-
+@login_required
+def delete_doctor_by_admin(request, id):
+    doctor = get_object_or_404(Doctor, id=id)
+    user = doctor.Doctor_id
+    user.delete()  # deletes both user and doctor record
+    doctor.delete()
+    return redirect('view_doctors')
 
 @login_required
 def view_contacts(request):
     contacts = Contact.objects.all().order_by('-submitted_at')
     return render(request, 'view_contacts.html', {'contacts': contacts})
 
-
+@login_required
 def view_patient_by_doctor(request):
     s = Patient.objects.select_related('Patient_id').all()
     return render(request, 'view_patient_doctor.html', {'view': s})
 
+@login_required
 def view_all_doctors(request):
-    doctors = Doctor.objects.select_related('Doctor_id').all()
+    if request.user.is_superuser:
+        # Admin sees all doctors
+        doctors = Doctor.objects.all()
+    else:
+        # Non-admin doctors see only approved doctors
+        doctors = Doctor.objects.filter(Doctor_id__is_active=True)
     return render(request, 'view_doctor_doctor.html', {'view': doctors})
+
 
 def edit_doctor(request):
     doctor_id = request.session.get('doctor_id')
@@ -221,36 +244,52 @@ def edit_patient_profile(request, id):
 
     return render(request, "edit_patient.html", {"user": user, "patient": patient})
 
+
 def view_doctors_by_patients(request):
-    doctors = Doctor.objects.all()
+    # Patients see only approved doctors
+    doctors = Doctor.objects.filter(Doctor_id__is_active=True)
     return render(request, "view_doctors_patient.html", {'view': doctors})
+
 
 @login_required
 def book_appointment(request):
     patient = get_object_or_404(Patient, Patient_id=request.user)
-    doctors = Doctor.objects.all()
     time_slots = ["09:00", "13:00", "17:00"]
+
+    # department filter
+    selected_dept = request.GET.get("department")
+    doctors = Doctor.objects.filter(Doctor_id__is_active=True)  # only approved doctors
+    if selected_dept:
+        doctors = doctors.filter(department=selected_dept)
 
     if request.method == "POST":
         doctor_id = request.POST["doctor"]
         date = request.POST["date"]
         time = request.POST["time"]
+        symptoms = request.POST.get("symptoms", "")
 
-        doctor = get_object_or_404(Doctor, id=doctor_id)
+        doctor = get_object_or_404(Doctor, id=doctor_id, Doctor_id__is_active=True)
         Appointment.objects.create(
             patient=patient,
             doctor=doctor,
             date=date,
-            time=time
+            time=time,
+            symptoms=symptoms
         )
         return redirect("phome")
 
-    return render(request, "book_appointment.html", {"doctors": doctors, "slots": time_slots})
+    return render(request, "book_appointment.html", {
+        "doctors": doctors,
+        "slots": time_slots,
+        "departments": Doctor.DEPARTMENT_CHOICES,
+        "selected_dept": selected_dept
+    })
 
 @login_required
 def view_appointments_doctor(request):
     doctor = get_object_or_404(Doctor, Doctor_id=request.user)
-    appointments = Appointment.objects.filter(doctor=doctor)
+    # Include related patient so we can show patient info quickly
+    appointments = Appointment.objects.filter(doctor=doctor).select_related('patient').order_by('-date', '-time')
     return render(request, "view_appointments_doctor.html", {"appointments": appointments})
 
 @login_required
@@ -263,10 +302,9 @@ def approve_appointment(request, id):
 @login_required
 def view_appointments_patient(request):
     patient = get_object_or_404(Patient, Patient_id=request.user)
+    # Include related doctor so we can show doctor name + department
     appointments = Appointment.objects.filter(patient=patient).select_related('doctor').order_by('-date', '-time')
     return render(request, 'view_appointments_patient.html', {'appointments': appointments})
-
-
 
 
 def logout_user(request):

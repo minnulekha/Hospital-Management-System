@@ -58,19 +58,35 @@
             font-weight: bold;
         }
 
+        /* Make toggler icon visible */
+        .navbar-toggler {
+            border: none;
+        }
+        .navbar-toggler-icon {
+            filter: invert(40%);
+        }
+
         /* Padding so content doesn’t overlap navbar */
         .content {
-            padding-top: 80px;
+            padding-top: 100px;
+        }
+
+        /* On small screens, add semi-transparent navbar background */
+        @media (max-width: 991px) {
+            .navbar {
+                background-color: rgba(255,255,255,0.85) !important;
+            }
         }
     </style>
 </head>
 <body>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg fixed-top">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
   <div class="container">
     <a class="navbar-brand" href="{% url 'home' %}">St.Ann's Hospital</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">

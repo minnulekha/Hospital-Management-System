@@ -20,44 +20,44 @@
       padding-top: 80px; /* space for fixed navbar */
     }
 
-    /* Navbar styling */
-    .navbar {
-      background: transparent !important;
-      backdrop-filter: none;
-    }
-    .navbar-brand {
-      color: #96685c !important;
-      font-weight: bold;
-      font-family: Georgia, serif;
-    }
-    .nav-link {
-      color: #96685c !important;
-      font-weight: 600;
-      margin-right: 15px;
-    }
-    .nav-link:hover {
-      color: #7a5a52 !important;
-    }
-    .navbar-toggler {
-      border-color: #96685c;
-    }
-    .navbar-toggler-icon {
-      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%2396685c' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-    }
-    .btn-home {
-      background-color: #fff;
-      color: #96685c;
-      border-radius: 20px;
-      padding: 6px 15px;
-      font-weight: 600;
-      transition: 0.3s ease;
-      margin-left: 10px;
-    }
-    .btn-home:hover {
-      background-color: #f2d6cf;
-      color: #5a3a33;
-    }
+        /* Navbar styling */
+        .navbar {
+            background: transparent !important;
+            box-shadow: none !important;
+            border: none !important;
+        }
+        .navbar .nav-link {
+            color: #96685c !important;
+            font-size: 18px;
+        }
+        .navbar .nav-link:hover {
+            color: #ab867d !important;
+        }
+        .navbar-brand {
+            color: #96685c !important;
+            font-weight: bold;
+        }
 
+        /* Make toggler icon visible */
+        .navbar-toggler {
+            border: none;
+        }
+        .navbar-toggler-icon {
+            filter: invert(40%);
+        }
+
+        /* Padding so content doesn’t overlap navbar */
+        .content {
+            padding-top: 100px;
+        }
+
+        /* On small screens, add semi-transparent navbar background */
+        @media (max-width: 991px) {
+            .navbar {
+                background-color: rgba(255,255,255,0.85) !important;
+            }
+        }
+    
     /* Form styling */
     form {
       background-color: rgba(255, 255, 255, 0.25);
@@ -126,29 +126,29 @@
 </head>
 <body>
 
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg fixed-top">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'home' %}">St.Ann's Hospital</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
-              data-bs-target="#navbarNav" aria-controls="navbarNav" 
-              aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav align-items-center">
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'experts' %}">Experts</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'contact' %}">Contacts</a>
-          </li>
-        </ul>
-        <a href="{% url 'home' %}" class="btn btn-home">Back to Home</a>
-      </div>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'home' %}">St.Ann's Hospital</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'about' %}"><b>ABOUT</b></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'experts' %}"><b>OUR EXPERT</b></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'contact' %}"><b>CONTACT</b></a>
+        </li>
+      </ul>
     </div>
-  </nav>
-
+  </div>
+</nav>
   <!-- Patient Signup Form -->
   <form action="" method="post">
     {% csrf_token %}
